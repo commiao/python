@@ -15,8 +15,10 @@ def connect_db(db_file):
 
 def close_db(cur, conn):
     if cur is not None:
+        # 关闭游标
         cur.close()
     if conn is not None:
+        # 关闭链接
         conn.close()
 
 
@@ -35,10 +37,7 @@ def create_table(db_file):
     cur.execute(sql)
     # 提交SQL操作 提交后才会生效
     conn.commit()
-    # 关闭游标
-    cur.close()
-    # 关闭链接
-    conn.close()
+    close_db(cur, conn)
 
 
 def insert_data(db_file):
@@ -75,16 +74,10 @@ def insert_data(db_file):
     # # 提交SQL操作 提交后才会生效
     # conn.commit()
 
-    # 关闭游标
-    cur.close()
-    # 关闭链接
-    conn.close()
+    close_db(cur, conn)
 
 
-def select_data(db_file, id=None):
-    sql = 'select * from person'
-    if id is not None:
-        sql = sql + f" where id = {id}"
+def select_data(db_file, sql):
     conn = connect_db(db_file)
     # 获取操作游标 游标就是当前操作的行
     cur = conn.cursor()
@@ -99,15 +92,11 @@ def select_data(db_file, id=None):
         list.append(bean)
     # 提交SQL操作 提交后才会生效
     conn.commit()
-    # 关闭游标
-    cur.close()
-    # 关闭链接
-    conn.close()
+    close_db(cur, conn)
     return list
 
 
-def update_data(db_file, id, age):
-    sql = f'update person set age={age} where id = {id}'
+def update_data(db_file, sql):
     conn = connect_db(db_file)
     # 获取操作游标 游标就是当前操作的行
     cur = conn.cursor()
@@ -116,14 +105,10 @@ def update_data(db_file, id, age):
     cur.execute(sql)
     # 提交SQL操作 提交后才会生效
     conn.commit()
-    # 关闭游标
-    cur.close()
-    # 关闭链接
-    conn.close()
+    close_db(cur, conn)
 
 
-def delete_data(db_file, id):
-    sql = f'delete from person where id = {id}'
+def delete_data(db_file, sql):
     conn = connect_db(db_file)
     # 获取操作游标 游标就是当前操作的行
     cur = conn.cursor()
@@ -132,10 +117,7 @@ def delete_data(db_file, id):
     cur.execute(sql)
     # 提交SQL操作 提交后才会生效
     conn.commit()
-    # 关闭游标
-    cur.close()
-    # 关闭链接
-    conn.close()
+    close_db(cur, conn)
 
 
 if __name__ == '__main__':
@@ -143,10 +125,22 @@ if __name__ == '__main__':
     # 数据库路径 如果路径里面没有这个数据库，会自动创建
     db_file = r'E:\SQLite_DB\test.db'
     # create_table(db_file)
-    insert_data(db_file)
-    # update_data(db_file, 1, 18)
-    # delete_data(db_file, 1)
-    list = select_data(db_file)
+    # insert_data(db_file)
+
+    # age = 18
+    # id = 1
+    # sql_update = f'update person set age={age} where id = {id}'
+    # update_data(db_file, sql_update)
+
+    # id = 1
+    # sql_delete = f'delete from person where id = {id}'
+    # delete_data(db_file, sql_delete)
+
+    id = None
+    sql_select = 'select * from person'
+    if id is not None:
+        sql_select = sql_select + f" where id = {id}"
+    list = select_data(db_file, sql_select)
     s = 0
     for person in list:
         s += 1
