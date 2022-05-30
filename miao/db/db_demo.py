@@ -42,32 +42,38 @@ def create_table(db_file):
 
 
 def insert_data(db_file):
-    # # 获取当前时间
-    # datetime_now = datetime.now()
-    # # 在当前时间基础上加1天
-    # # datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
-    # birthday = datetime_now - timedelta(days=1)
-    # sql = 'insert into person(id,name,age,birthday) values (?,?,?,?)'
-    # data = (1, '张三', 23, birthday)
-    # conn = connect_db(db_file)
-    # # 获取操作游标 游标就是当前操作的行
-    # cur = conn.cursor()
-    # print(sql)
-    # # 执行sql语句
-    # cur.execute(sql, data)
-    # # 提交SQL操作 提交后才会生效
-    # conn.commit()
-    
-    name = '李四'
-    birthday = datetime.now() - timedelta(weeks=1)
-    sql = f'insert into person(id,name,age,birthday) values ({2},\'{name}\',{30},\'{birthday}\')'
+    """
+        sql语句推荐使用占位符的形式
+    """
+    # 获取当前时间
+    datetime_now = datetime.now()
+    # 在当前时间基础上加1天
+    # datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+    birthday = datetime_now - timedelta(days=1)
+    sql = 'insert into person(id,name,age,birthday) values (?,?,?,?)'
+    data = (1, '张三', 23, birthday)
     conn = connect_db(db_file)
     # 获取操作游标 游标就是当前操作的行
     cur = conn.cursor()
     print(sql)
-    cur.execute(sql)
+    # 执行sql语句
+    cur.execute(sql, data)
     # 提交SQL操作 提交后才会生效
     conn.commit()
+    
+    """
+        使用拼接字符串,容易导致sql注入,以及数据格式 ' " 等转义问题
+    """
+    # name = '李四'
+    # birthday = datetime.now() - timedelta(weeks=1)
+    # sql = f'insert into person(id,name,age,birthday) values ({2},\'{name}\',{30},\'{birthday}\')'
+    # conn = connect_db(db_file)
+    # # 获取操作游标 游标就是当前操作的行
+    # cur = conn.cursor()
+    # print(sql)
+    # cur.execute(sql)
+    # # 提交SQL操作 提交后才会生效
+    # conn.commit()
 
     # 关闭游标
     cur.close()
