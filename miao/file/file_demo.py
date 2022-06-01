@@ -25,6 +25,21 @@ def move_file(file_path, dir_path):
         print('文件已存在：%s' % file_path)
 
 
+# 支持移动并修改文件名
+def rename_file(file_path, new_file_path):
+    fd = os.path.exists(new_file_path)
+    if not fd:
+        pass
+    else:
+        # 如果存在，则在文件名后加"_1"，方便区分
+        new_file_name = os.path.basename(new_file_path)
+        file_name_splitext = os.path.splitext(new_file_name)
+        new_file_name = file_name_splitext[0] + '_1' + file_name_splitext[1]
+        new_file_dir = os.path.dirname(new_file_path)
+        new_file_path = os.path.join(new_file_dir, new_file_name)
+    os.rename(file_path, new_file_path)
+
+
 SHARE_USER = 'commiao'
 SHARE_PASSWORD = 'han880924'
 SHARE_FILE_HOST = r'\\192.168.31.99'
@@ -38,10 +53,12 @@ def int_permission_cmd():
 
 
 if __name__ == '__main__':
-    path = r'F:\aaa.txt'
+    path = r'F:\bbb.txt'
     path_2 = r'F:\新建文件夹\test'
-    check_create_dir(path_2)
-    move_file(path, path_2)
+    # check_create_dir(path_2)
+    # move_file(path, path_2)
     path_3 = r'\\192.168.31.99\photo\jingmiao\test'
     # int_permission_cmd()
-    move_file(path, path_3)
+    # move_file(path, path_3)
+    path_4 = r'F:\新建文件夹\test\aaa.txt'
+    rename_file(path_4, path)
