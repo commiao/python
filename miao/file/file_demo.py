@@ -25,7 +25,7 @@ def move_file(file_path, dir_path):
         print('文件已存在：%s' % file_path)
 
 
-# 支持移动并修改文件名
+# 支持移动并修改文件名 如果文件名重复则 文件名_1.后缀名
 def rename_file(file_path, new_file_path):
     fd = os.path.exists(new_file_path)
     if not fd:
