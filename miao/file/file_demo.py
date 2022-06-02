@@ -27,16 +27,20 @@ def move_file(file_path, dir_path):
 
 # 支持移动并修改文件名 如果文件名重复则 文件名_1.后缀名
 def rename_file(file_path, new_file_path):
-    fd = os.path.exists(new_file_path)
+    fd = os.path.exists(file_path)
     if not fd:
-        pass
-    else:
+        print('修改文件名：原文件%s不存在,结束任务' % file_path)
+        return
+
+    fd = os.path.exists(new_file_path)
+    if fd:
         # 如果存在，则在文件名后加"_1"，方便区分
         new_file_name = os.path.basename(new_file_path)
         file_name_splitext = os.path.splitext(new_file_name)
         new_file_name = file_name_splitext[0] + '_1' + file_name_splitext[1]
         new_file_dir = os.path.dirname(new_file_path)
         new_file_path = os.path.join(new_file_dir, new_file_name)
+    print('修改文件名：原文件:%s,-->新文件:%s' % (file_path,new_file_path))
     os.rename(file_path, new_file_path)
 
 
