@@ -64,14 +64,14 @@ def int_permission_cmd():
 
 
 if __name__ == '__main__':
-    path = r'F:\bbb.txt'
-    path_2 = r'F:\新建文件夹\test'
+    path = r'D:\aaa.txt'
+    # path_2 = r'D:\新建文件夹\test'
     # check_create_dir(path_2)
     # move_file(path, path_2)
     path_3 = r'\\192.168.31.99\photo\jingmiao\test'
     # int_permission_cmd()
     # move_file(path, path_3)
-    path_4 = r'F:\新建文件夹\test\aaa.txt'
-    # rename_file(path_4, path)
+    path_4 = r'D:\新建文件夹\test\aaa.txt'
+    rename_file(path, path_4)
 
     print('success')
